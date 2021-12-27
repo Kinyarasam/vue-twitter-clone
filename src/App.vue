@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div class="bg-gray-200 min-h-screen w-full">
-      hi
+      Twitter clone
+      <router-view />
     </div>
     
   </div>
