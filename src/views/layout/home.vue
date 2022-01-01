@@ -58,18 +58,86 @@
                 <div class="flex-none">
                     <img src="../../../src/assets/logo.png" alt="profile.png" class="w-12 h-12 rounded-full overflow-hidden border">
                 </div>
-                <form class="w-full px-4 relative">
-                    <textarea placeholder="What's happenning?" class="mt-3 pb-3 w-full focus:outline-none"/>
+                <form @submit.prevent="addNewTweet" class="w-full px-4 relative">
+                    <textarea v-model="tweet.content" placeholder="What's happenning?" class="mt-3 pb-3 w-full focus:outline-none"/>
                     <div class="flex items-center text-blue-500 my-3 mb-2">
                         <fa icon="image" class="text-lg mr-4 "/>
                         <fa icon="film" class="text-lg mr-4"/>
                         <fa icon="chart-bar" class="text-lg mr-4 "/>
                         <fa icon="smile" class="text-lg mr-4"/>
                     </div>
-                    <button class="h-10 px-4 text-white font-semibold bg-blue-500 hover:bg-blue-900 focus:outline-none rounded-full absolute bottom-0 right-0">
+                    <button type="submit" class="h-10 px-4 text-white font-semibold bg-blue-500 hover:bg-blue-900 focus:outline-none rounded-full absolute bottom-0 right-0">
                         Tweet
                     </button>
                 </form>
+            </div>
+            <div class="flex flex-col-reverse">
+                <div v-for="tweet in tweets" :key="tweet" class="w-full p-4 border-b-2 hover:bg-gray-300 flex">
+                    <div class="flex-none mr-4">
+                    <img src="./../../../src/assets/logo.png" alt="profile.png" class="w-12 h-12 rounded-full border overflow-hidden text-xs leading-3 flex-none"/>
+                </div>
+                 <div class="w-full">
+                    <div class="flex items-center w-full">
+                        <p class="text-gray-800 font-semibold">KinyaraSam</p>
+                        <p class="text-sm ml-2">@kinyarasam</p>
+                        <p class="text-sm ml-2">1 sec ago</p>
+                        <fa icon="angle-down" class="ml-auto"/>
+                    </div>
+                    <p class="py-2">
+                        {{ tweet.content }}
+                    </p>
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center text-sm">
+                            <fa icon="comment" class="mr-3"/>
+                            <p>0</p>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <fa icon="retweet" class="mr-3"/>
+                            <p>0</p>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <fa icon="heart" class="mr-3"/>
+                            <p>0</p>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <fa icon="share-square" class="mr-3"/>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div v-for="follow in following" :key="follow" class="w-full p-4 border-b-2 hover:bg-gray-300 flex">
+                <div class="flex-none mr-4">
+                    <img src="./../../../src/assets/logo.png" alt="profile.png" class="w-12 h-12 rounded-full border overflow-hidden text-xs leading-3 flex-none"/>
+                </div>
+                <div class="w-full">
+                    <div class="flex items-center w-full">
+                        <p class="text-gray-800 font-semibold">{{ follow.name }}</p>
+                        <p class="text-sm ml-2">{{ follow.handle }}</p>
+                        <p class="text-sm ml-2">{{ follow.time }}</p>
+                        <fa icon="angle-down" class="ml-auto"/>
+                    </div>
+                    <p class="py-2">
+                        {{ follow.tweet }}
+                    </p>
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center text-sm">
+                            <fa icon="comment" class="mr-3"/>
+                            <p>{{ follow.comments }}</p>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <fa icon="retweet" class="mr-3"/>
+                            <p>{{ follow.retweets }}</p>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <fa icon="heart" class="mr-3"/>
+                            <p>{{ follow.likes }}</p>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <fa icon="share-square" class="mr-3"/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /tweets -->
@@ -144,7 +212,24 @@ export default {
                 {src: '../../../src/assets/logo.png', alt: 'Kelvin', name: 'Kelvin Hart', handle: '@miniRock'},
                 {src: '../../../src/assets/logo.png', alt: 'Adrian', name: 'Adrian Monk', handle: '@detective'},
                 {src: '', name: '', handle: ''},
-            ]
+            ],
+            following: [
+                {src: '', name: 'Elon Musk', handle: '@teslaboy', time: '20 min', tweet: 'Should I just quaranteen on mars?', comments: '1,000', retweets: '550', likes: '1,000,003'},
+                {src: '', name: 'Kelvin Hart', handle: '@miniRock', time: '55 min', tweet: 'Should me and the rock do another sub-par movie together?', comments: '2,030', retweets: '50', likes: '20'},
+                {src: '', name: 'Elon Musk', handle: '@teslaboy', time: '1.4 hr', tweet: 'Just made a flame thrower.Shld I sell them?', comments: '100,000', retweets: '1,000,002', likes: '5,000,000'},
+            ],
+            tweets: [
+                {content: 'Happy New Year.'}
+            ],
+            tweet: {content: ''}
+        }
+    },
+    methods: {
+        addNewTweet () {
+            let newTweet = {
+                content: this.tweet.content
+            }
+            this.tweets.push (newTweet)
         }
     }
 
